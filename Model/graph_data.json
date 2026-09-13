@@ -1,0 +1,74 @@
+{
+    "modelPerformance": [
+        {
+            "metric": "Accuracy",
+            "centralized": 93.79,
+            "federated": 93.7
+        },
+        {
+            "metric": "Precision",
+            "centralized": 44.22,
+            "federated": 43.67
+        },
+        {
+            "metric": "Recall",
+            "centralized": 52.16,
+            "federated": 52.75
+        },
+        {
+            "metric": "F1-score",
+            "centralized": 47.86,
+            "federated": 47.79
+        }
+    ],
+    "rocAuc": {
+        "centralized": 0.8936,
+        "federated": 0.8936
+    },
+    "confusionMatrix": {
+        "centralized": [
+            [
+                33561,
+                1326
+            ],
+            [
+                964,
+                1051
+            ]
+        ],
+        "federated": [
+            [
+                33516,
+                1371
+            ],
+            [
+                952,
+                1063
+            ]
+        ]
+    },
+    "hospitalWeights": [
+        {
+            "hospital": "Hospital 1",
+            "weight": 40.0
+        },
+        {
+            "hospital": "Hospital 2",
+            "weight": 35.0
+        },
+        {
+            "hospital": "Hospital 3",
+            "weight": 25.0
+        }
+    ],
+    "targetDistribution": [
+        {
+            "label": "No",
+            "count": 34887
+        },
+        {
+            "label": "Yes",
+            "count": 2015
+        }
+    ]
+}
