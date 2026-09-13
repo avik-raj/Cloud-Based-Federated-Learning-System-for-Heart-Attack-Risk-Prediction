@@ -1,5 +1,5 @@
 # Cloud-Based Federated Learning System for Heart Attack Risk Prediction
-
+### Logistic Regression-Based Federated Learning with FedAvg for Privacy-Preserving Healthcare Prediction
 ## Overview
 
 This project presents a cloud-based federated machine learning system designed to predict heart attack risk while following a privacy-preserving distributed learning approach.
