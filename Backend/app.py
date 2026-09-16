@@ -1,4 +1,6 @@
+import os
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import joblib
 import pandas as pd
@@ -9,10 +11,38 @@ app = FastAPI(
     description="Federated Learning Based Heart Attack Prediction API"
 )
 
+# Enable CORS for Next.js frontend
+# Enable CORS for Next.js frontend and local testing
+allowed_origins_env = os.environ.get(
+    "ALLOWED_ORIGINS",
+    "http://localhost:3000,http://127.0.0.1:3000,*"
+)
+cors_origins = [origin.strip() for origin in allowed_origins_env.split(",") if origin.strip()]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_origins=cors_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Load trained federated model and preprocessing pipeline
-model = joblib.load("../Model/federated_model.pkl")
-preprocessor = joblib.load("../Model/preprocessor.pkl")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "..", "Model", "federated_model.pkl")
+PREPROCESSOR_PATH = os.path.join(BASE_DIR, "..", "Model", "preprocessor.pkl")
+MODEL_DIR = os.environ.get(
+    "MODEL_DIR",
+    os.path.join(BASE_DIR, "..", "Model")
+    if os.path.exists(os.path.join(BASE_DIR, "..", "Model", "federated_model.pkl"))
+    else os.path.join(BASE_DIR, "Model")
+)
+MODEL_PATH = os.path.join(MODEL_DIR, "federated_model.pkl")
+PREPROCESSOR_PATH = os.path.join(MODEL_DIR, "preprocessor.pkl")
+
+model = joblib.load(MODEL_PATH)
+preprocessor = joblib.load(PREPROCESSOR_PATH)
 
 
 # Patient input structure
@@ -45,7 +75,7 @@ class PatientData(BaseModel):
     SmokerStatus: str
     ECigaretteUsage: str
     ChestScan: str
-    RaceEthnicityCategory: str
+    RaceEthnicityCategory: str = "White only, Non-Hispanic"
     AgeCategory: str
     HeightInMeters: float
     WeightInKilograms: float
@@ -71,6 +101,8 @@ def predict(patient: PatientData):
 
     # Convert patient input into a dictionary
     patient_dict = patient.model_dump()
+    if not patient_dict.get("RaceEthnicityCategory"):
+        patient_dict["RaceEthnicityCategory"] = "White only, Non-Hispanic"
 
     # Convert dictionary into DataFrame
     input_data = pd.DataFrame([patient_dict])

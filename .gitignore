@@ -20,6 +20,14 @@ Thumbs.db
 # Environment / secrets
 .env
 .env.*
+*.pem
+*.key
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+build/
 
 # Logs
 *.log

@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --cardio-bg: #EAF7FB;
+    --cardio-ice: #BFEAF2;
+    --cardio-cyan: #63C9D6;
+    --cardio-teal: #1E7F8C;
+    --cardio-teal-hover: #16646F;
+    --cardio-dark: #20343A;
+    --cardio-dark-muted: #4A636A;
+    --cardio-dark-light: #6A868F;
+    
+    --risk-low: #1E7F8C;
+    --risk-mod: #E08712;
+    --risk-high: #D1383A;
+  }
+
+  body {
+    background-color: #EAF7FB;
+    color: #20343A;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Custom scrollbar matching medical portal design */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #EAF7FB;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #BFEAF2;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #63C9D6;
+}
